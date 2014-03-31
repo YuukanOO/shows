@@ -1,6 +1,12 @@
 # -*- encoding: utf-8 -*-
 module Shows
 
+    class NoShowFound < StandardError
+    end
+
+    class MultipleShowsFound < StandardError
+    end
+
     class Show
 
         attr_reader :id, :name, :summary
@@ -12,7 +18,12 @@ module Shows
         end
 
         def self.find_by_name(name)
-            # Devra retourner un objet Show grâce à l'API tvdb
+            shows = Provider::shows_by_name(name)
+
+            raise NoShowFound.new('No show found for "%s"' % name) if shows.empty?
+            raise MultipleShowsFound.new('Multiple shows found for "%s"' % name) if shows.length > 1
+
+            shows.first
         end
 
     end
