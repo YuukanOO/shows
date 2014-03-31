@@ -1,2 +1,3 @@
 # -*- encoding: utf-8 -*-
-require 'shows/cli'
+require 'shows/show'
+require 'shows/provider'
